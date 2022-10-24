@@ -3,7 +3,7 @@
 print("\t Welcome! Basant")
 
 
-# Class Method
+## Class Method
 class Employee:
     company = "Camel"
     salary = 100
@@ -21,7 +21,7 @@ print(e.salary)
 print(Employee.salary)
 
 
-# Class Method 2 (To change attributes of class)
+## Class Method 2 (To change attributes of class)
 class Employee:
     company = "Camel"
     salary = 100
