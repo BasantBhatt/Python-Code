@@ -1,0 +1,174 @@
+
+print('BASANT BHATT')
+
+from telnetlib import STATUS
+import tkinter as tk
+import tkinter.font
+
+from setuptools import Command
+
+window = tk.Tk()
+window.geometry('1330x680')
+window.title("Khwopa College of Engineering Earthquake Simulator")
+
+# START: Main title
+label = tk.Label(window, text="KHCE - Earthquake Simulator - KHCE", fg="white", bg="blue",anchor="center",width=30, height=1,
+    font = ("Times New Roman Baltic",30) )
+label.pack(padx=1, pady=1) 
+#END: Main title
+
+#START: start button
+def simulate():
+   return()
+   
+start = tk.Button(window, text="START", fg="white", bg="green", font = ("Cambria",15), command= simulate)
+start.place(x=70, y=530)
+#End: start button
+
+#START: stop button
+def terminate():
+   return()
+
+stop = tk.Button(window, text="STOP", fg="white", bg="red", font = ("Cambria",15), command= terminate)
+stop.place(x=76, y=580)
+#END: stop button
+
+#START: Browsing Path
+from tkinter import *
+from tkinter import filedialog
+from tkinter.filedialog import askopenfile
+
+# This function will be used to open file in read mode 
+filename = None
+def OpenFile(event=None):
+    filename = askopenfile(mode ='r', filetypes =[('Excel files', '.xlsx')])
+    print('Selected:', filename)
+    # Change text of label
+    filename  = title['text']
+  
+open = tk.Button(window, text ='Open File', command = OpenFile, bg='brown', fg='white')
+open.place(x=90, y=100)
+
+title = tk.Label(text='File Name:')
+title.place(x=155, y=102)
+#END: Browsing Path
+
+#START:Graphs Placement
+# Input graph
+inputframe = Frame(window, height=380, width=620, bg="gray")
+inputframe.place(x=50, y=140)
+
+inlabel = tk.Label(inputframe, text= "Input Graph", font = ("Times New Roman Baltic",10) )
+inlabel.place(x=250, y=5 )
+
+# Output graph
+outputframe = Frame(window, height=380, width=620, bg="gray")
+outputframe.place(x=700, y=140)
+
+outlabel = tk.Label(outputframe, text= "Output Graph", font = ("Times New Roman Baltic",10) )
+outlabel.place(x=250, y=5)
+
+#END: Graphs Placement
+import matplotlib.pyplot as plt
+from pandas import DataFrame
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+inputdata = {'time': [1,2,3,4,5,6,7,8,9,10],
+         'displacement': [0,1,0,-1,0,1,0,-1,0,1] }
+inputgraph = DataFrame(inputdata,columns=['time','displacement'] )
+
+outdata = {'time': [1,2,3,4,5,6,7,8,9,10],
+         'displacement': [1,0,-1,0,1,0,-1,0,1,0] }
+outgraph = DataFrame(outdata,columns=['time','displacement'] )
+
+graphi = plt.Figure(figsize=(6.0,3.3), dpi=100)
+ax1 = graphi.add_subplot(111)
+line1 = FigureCanvasTkAgg(graphi , inputframe)
+line1.get_tk_widget().place(x=10,y=35)
+df1 = inputgraph[['time','displacement']].groupby('time').sum()
+df1.plot(kind='line', legend=True, ax=ax1, color='r',marker='o', fontsize=10)
+ax1.set_title('input(Time VS Displacement)')
+
+grapho = plt.Figure(figsize=(6.0,3.3), dpi=100)
+ax2 = grapho.add_subplot(111)
+line2 = FigureCanvasTkAgg(grapho , outputframe)
+line2.get_tk_widget().place(x=10,y=35)
+df2 = outgraph[['time','displacement']].groupby('time').sum()
+df2.plot(kind='line', legend=True, ax=ax2, color='g',marker='o', fontsize=10)
+ax2.set_title('output(Time VS Displacement)')
+#END: GRAPH
+
+# #START: Upload button
+# def upload():
+
+#    return()
+
+# upload = tk.Button(window, text=">>UPLOAD>>", fg="white", bg="purple", font = ("Cambria",15), command= upload)
+# upload.place(x=1150, y=550)
+# #END: Upload button
+
+#START:PORT Checkbox
+def checkbox(choice):
+    choice = select.get()
+    print(choice)
+
+ports = ['<Ports>','COM3','Nepal','Australia','United Kingdom','United States']
+
+# setting variable for Integers
+select = StringVar()
+select.set(ports[0])
+
+# creating widget
+dropdown = OptionMenu(
+    window,
+    select,
+    *ports,
+    command=checkbox
+    )
+
+dropdown.place(x=1010, y=555)
+
+port_sel = tk.Label(text='Select Port:', fg='black', bg ='pink', font = ("Times New Roman Baltic",12))
+port_sel.place(x=920, y=559)
+#END: PORT Checkbox
+
+#START:Status 
+status = tk.Label(text='Status:', fg='black', bg ='pink', font = ("Times New Roman Baltic",12))
+status.place(x=930, y=610)
+
+i = 1
+if i <= 5:
+    connected = tk.Label(window, text = "Connected", font = ("Times New Roman Baltic",12)).place(x = 1000,y = 610)
+    i = i+1
+
+else:
+    disconnected = tk.Label(window, text = "Dis Connected", font = ("Times New Roman Baltic",12)).place(x = 1000,y = 612)
+
+#END: Status
+
+#START: Progress Bar
+import time
+from tkinter.ttk import *
+
+def upload():
+    for i in range(5):
+        window.update_idletasks()
+        pbar['value'] += 20 #Part that fills the progress bar.
+
+        time.sleep(0.5)
+
+        return()
+
+pbar = Progressbar(window, orient=HORIZONTAL, length=135, mode='determinate')
+pbar.place(x=1150, y=600)
+
+upload = tk.Button(window, text=">>UPLOAD>>", fg="white", bg="purple", font = ("Cambria",15), command= upload)
+upload.place(x=1150, y=550)
+
+#END: Progress Bar
+
+#To stop the programme
+print('Khwopa College of Engineering')
+window.mainloop()
+
+print(" Thank you Basant Bhatt ")
