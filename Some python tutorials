@@ -1,0 +1,95 @@
+print("\t \tWelcome! BASANT BHATT ")
+print("\t \t \t Hola ")
+
+'''
+# Ass 1 ( Greatest of three)
+def larg(num1, num2, num3):
+    if (num1>num2):
+        if (num1>num3):
+            return num1
+        else:
+            return num3
+         
+    else:
+         if (num2>num3):
+             return num2
+         else:
+             return num3
+n = larg(1, 12, 6)
+print("Largest is " + str(n))
+'''
+
+'''
+# Ass 2 (Degree to farenhite temperature)
+def faren(cel):
+    far = (cel * (9/5)) + 32 
+    return far
+
+d = float(input("Enter temperature in dergee: "))
+f = faren(d)
+print("Dergee of " + str(d) + " is "+ str(f))
+'''
+'''
+# Ass 3 ( No line at the end of print())
+print("Hello")
+print("Nasant")
+print("how are you",end="")
+print(" Nicely done",end="")
+'''
+
+'''
+# Ass 4 ( Sum of n natural nuber using recursion)
+def summ(n):
+    if n!=0:
+        sum = n + summ(n-1)
+        return sum
+    else:
+        return 0
+
+a = int(input("Enter your number "))
+print("Sum upto " + str(a) + " is " + str(summ(a)))
+'''
+
+'''
+# Ass 5( to print upper triangular ***)
+def star(n):
+    for i in range(0,n):
+        print("*"*(n-i))
+        
+a = int(input("Enter your number: "))
+print(star(a))
+'''
+
+'''
+# Ass 6 ( String striping)
+def remov(a):
+    str = a.strip()
+    return str
+
+n = input("your string: ")
+print(remov(n))
+'''
+'''
+# Ass 6 ( String striping and repacing)
+def remov(a, w):
+    word = a.replace(w,"") # replaces w from a by "SPACE"
+    str = word.strip()
+    return str
+
+n = input("your string: ")
+p = input("Removing word: ")
+print(str(remov(n, p)))
+'''
+ 
+'''
+#Ass 5 (Multiplication table using functon)
+def mul(n):
+    for i in range(1,11):
+        print(f"{n}*{i}={n*i}") 
+        
+    else:
+        print("")
+
+a = int(input("Enter your number: "))
+print(mul(a))
+'''
