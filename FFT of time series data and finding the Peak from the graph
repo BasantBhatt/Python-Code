@@ -1,0 +1,110 @@
+
+print('Hello Basant Bhatt')
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the earthquake displacement time series data as a NumPy array
+displacement_time_series = np.loadtxt('Chille.txt') ## only displacement data are added in a column
+
+# Compute the discrete Fourier transform of the time series data
+fourier_transform = np.fft.fft(displacement_time_series)
+
+# Get the sample rate of the time series data (number of samples per second)
+sample_rate = 1000  # assume the time series data has a sample rate of 1000 Hz
+
+# Use the fftfreq function to get the frequency values for each component in the spectrum
+frequencies = np.fft.fftfreq(len(displacement_time_series), d=0.005)
+# amplitudes = np.abs(fourier_transform)
+
+
+sp = np.fft.fft(displacement_time_series) # amplitude pf the fourier transform
+n = len(displacement_time_series)  # Number of samples in the data
+
+amplitudes = np.abs(sp) / n # normalizing the amplitude the FFT
+
+t1 = 140
+t0 = 0
+freq = (np.fft.fftfreq(n)*n* 1 / (t1 - t0))
+
+fft_freq = np.abs(freq)
+fft_amp = amplitudes
+
+# plt.plot(fft_freq, fft_amp)
+# plt.show()
+
+print("Thank you Basant Bhatt for FFT")
+
+
+###### Sorting the FFT data to find out the peak values of the fft- freq, and amp
+# print('fft_amp=', fft_amp)
+
+# sort_fft_amp = np.sort(fft_amp)[::-1]
+# print("Sorted amplitude=", sort_fft_amp)
+
+
+####### Saving the ascending sorted to the excel
+import openpyxl
+
+# Create a new workbook and add a worksheet
+workbook = openpyxl.Workbook()
+worksheet = workbook.active
+
+# Your array
+fft_amp # for amplitude
+fft_freq # for freuency
+
+# Iterate over the array and write each element to a cell in the worksheet
+for i, element in enumerate(fft_amp):
+    worksheet.cell(row=i+1, column=1).value = element  # placing amplitude in the 1st column of the worksheet
+   
+for i,  element in enumerate(fft_freq):
+     worksheet.cell(row=i+1, column=2).value = element  # placing amplitude in the 1st column of the worksheet
+
+# Save the workbook
+workbook.save('fft_conv_of_amp_and_freq.xlsx') 
+
+
+##### Assessing the work book and arranging it into the ascending order.
+# Load the workbook
+workbook = openpyxl.load_workbook('fft_conv_of_amp_and_freq.xlsx')
+
+# Get the first sheet
+worksheet = workbook.worksheets[0]
+
+# Iterate over the rows and print the values
+for row in worksheet.rows:
+    values = [cell.value for cell in row]
+    # print(values)
+
+print("Thank you Basant Bhatt for Saving and accessing in EXCEL")
+
+####### Finding the peak values of the signal
+from scipy.signal import find_peaks
+
+peak = find_peaks(fft_amp, height=0.1, threshold=0.005, distance=1)  ## change the values according to your needs
+# print(' Peak Values are: ', peak)
+peak_height= peak[1]['peak_heights'] # list of the heights of the peaks
+peak_pos = fft_freq[peak[0]] # list of the peaks position
+
+print("peak heights are: ", peak_height, " and number of data are:", len(peak_height))
+print(" Peaks position are:", peak_pos,  " and number of data are:", len(peak_pos))
+
+### finding the minima
+fft_amp2= fft_amp*-1
+minima= find_peaks(fft_amp2)
+minima_pos= fft_freq[minima[0]]  # List of the minima position
+minima_height= fft_amp2[minima[0]] # list of the mirrored minima heights
+real_minima_height = minima_height*-1
+print("Thank you Basant Bhatt for selecting PEAK and LOW point from graph")
+
+### ploting the functions
+fig= plt.figure()
+ax= fig.subplots()
+ax.plot(fft_freq, fft_amp)   ## plotting main graph of FFT data
+ax.scatter(peak_pos, peak_height, color='r', s=15, marker='D', label= 'maxima') ##
+ax.scatter(minima_pos, real_minima_height, color='gold', s=15, marker='x', label= 'maxima')
+ax.grid()
+plt.show()
+
+print("Thank you Basant Bhatt for this program")
